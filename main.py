@@ -1,5 +1,8 @@
 from flask import Flask, render_template, url_for
+import config
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = config.secret
 
 @app.route('/')
 @app.route('/index')
