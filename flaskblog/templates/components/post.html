@@ -1,0 +1,25 @@
+<div class="card mb-4">
+    <div class="card-header d-flex">
+        <h3 class="d-inline-block mr-auto mb-0">{{ post.title }}</h3>
+        <span class="d-inline-block pt-2">
+            {% if not hideAuthor %}
+                {% if current_user.is_authenticated and current_user.id == post.author.id %}
+                    <a href="{{ url_for('account') }}">Me</a>
+                {% else %}
+                    <a href="{{ url_for('user', user_display_name=post.author.display_name) }}">{{ post.author.display_name }}</a>
+                {% endif %}
+            {% endif %}
+            <span class="text-muted pl-2">{{ post.date_posted.strftime('%d/%m/%Y') }}</span>
+        </span>
+    </div>
+    <div class="card-body">
+        {% if not showPostBody and post.body|length > 500 %}
+            <p class="card-text">
+                {{ post.body[:500] }}...
+                <a href="{{ url_for('view_post', post_id=post.id) }}">Read more</a>
+            </p>
+        {% else %}
+            <p class="card-text">{{ post.body }}</p>
+        {% endif %}
+    </div>
+</div>

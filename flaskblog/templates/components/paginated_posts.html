@@ -1,0 +1,16 @@
+{% for post in posts.items %}
+    {% include 'components/post.html' %}
+{% endfor %}
+<div class="pagination text-center">
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if page_num == posts.page %}
+                <a class="btn border border-dark px-3 mx-1 disabled">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-primary px-3 mx-1" href="{{ url_for(request.endpoint, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+</div>

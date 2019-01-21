@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="mb-3 pt-4 pb-3 pl-3">My Posts</h2>
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-3 p-0">
+                <form method="POST" action="" class="col-sm-12 pt-2 border">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Change password</legend>
+                        <div class="form-group">
+                            {{ form.password.label(class="form-control-label") }}
+                            {% if form.password.errors %}
+                                {{ form.password(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.password(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.rePassword.label(class="form-control-label") }}
+                            {% if form.rePassword.errors %}
+                                {{ form.rePassword(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.rePassword.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.rePassword(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-9">
+                {% set hideAuthor = true %}
+                {% include 'components/paginated_posts.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
