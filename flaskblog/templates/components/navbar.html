@@ -1,10 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
-        {% if request.endpoint == 'index' %}
-            <a class="navbar-brand" href="#">Home</a>
-        {% else %}
-            <a class="navbar-brand" href="{{ url_for('index') }}">Navbar</a>
-        {% endif %}
+        <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

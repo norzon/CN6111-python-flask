@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 
-{% set posts = [post] %}
-
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <div class="card-title d-flex">
-                <h3 class="d-inline-block mr-auto mb-0">{{ post.title }}</h3>
-                <span class="d-inline-block pt-2">
-                    <a href="{{ url_for('user', user_display_name=post.author.display_name) }}">{{ post.author.display_name }}</a>
-                    <span class="text-muted pl-2">{{ post.date_posted.strftime('%d/%m/%Y') }}</span>
-                </span>
-            </div>
-            <p class="card-text">{{ post.body }}</p>
-        </div>
-    </div>
+    {% set showPostBody = true %}
+    {% include 'components/post.html' %}
 {% endblock %}

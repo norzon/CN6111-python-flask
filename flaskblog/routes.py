@@ -3,13 +3,14 @@ from flaskblog import app, db, bcrypt
 from flaskblog.forms import LoginForm, RegistrationForm, ChangePasswordForm, PostForm
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
+from flaskblog.config import posts_pagination
 
 
 # Register index route
 @app.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5, page=1)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=posts_pagination, page=page)
     return render_template('pages/index.html', posts=posts)
 
 # Register registration route
@@ -64,7 +65,7 @@ def account():
         flash(f'Your password has been updated', 'success')
         return redirect(url_for('account'))
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.filter_by(author=current_user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    posts = Post.query.filter_by(author=current_user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=posts_pagination)
     return render_template('pages/account.html', title='My Account', form=form, posts=posts)
 
 
@@ -88,9 +89,10 @@ def view_post(post_id):
 
 @app.route('/user/<string:user_display_name>')
 def user(user_display_name):
-    if current_user.display_name == user_display_name:
+    if current_user.is_authenticated and current_user.display_name == user_display_name:
         return redirect(url_for('account'))
     user = User.query.filter_by(display_name=user_display_name).first_or_404()
-    posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=posts_pagination)
     return render_template('pages/user.html', user=user, posts=posts)
 

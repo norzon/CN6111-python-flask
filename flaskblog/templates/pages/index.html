@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="mb-4">Home page</h1>
-    {% include 'components/paginated_posts.html' %}
+    <!-- <h1 class="mb-4">Home page</h1> -->
+    {% if posts.items|length == 0 %}
+        <h2 class="text-center py-4">Either something went terribly wrong <b>or</b><br>this application is as fresh as a daisy!</h2>
+    {% else %}
+        {% include 'components/paginated_posts.html' %}
+    {% endif %}
 {% endblock %}
