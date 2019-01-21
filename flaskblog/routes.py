@@ -55,8 +55,6 @@ def logout():
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    if not current_user.is_authenticated:
-        return redirect(url_for('index'))
     form = ChangePasswordForm()
     if form.validate_on_submit():
         hashedPassword = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
