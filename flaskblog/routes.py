@@ -7,8 +7,6 @@ from flask_login import login_user, current_user, logout_user
 
 # Register index route
 @app.route('/')
-@app.route('/index')
-@app.route('/home')
 def index():
     return render_template('pages/index.html')
 
@@ -44,7 +42,7 @@ def login():
     return render_template('pages/login.html', title='Login', form=form)
 
 
-@app.route('/logout'):
+@app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
